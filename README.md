@@ -301,9 +301,8 @@ There are some things that guide decisions about how Runa works, what future
 needs are going to be, and what should be prioritized. Here they are:
 
 - **Trust & Safety First**:
-
-People can always install whatever they want; it's their computer after all. But,
-when it comes to the Runa core / base:
+  People can always install whatever they want; it's their computer after all. But,
+  when it comes to the Runa core / base:
 
   - We're safety and privacy focused! We understand that our users might use
     Runa when they're at their most vulnerable, so we put extra diligence into
