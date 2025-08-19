@@ -94,7 +94,6 @@ flowchart TD
         gilgul["gilgul<br/>Service Manager & Lifecycle Orchestrator"]
         splinter["splinter<br/>Shared-Memory Bus & KV Store"]
         splinfer["splinfer<br/>Inference Layer (llama.cpp based)"]
-        llama.cpp["llama.cpp<br />Third Party Inference Layer"]
     end
 
     subgraph Data/Knowledge
