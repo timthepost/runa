@@ -72,7 +72,7 @@ GB).
 - **Componentized**: Isolates responsibilities into swappable units.
 - **Privacy-respecting**: No tracking, telemetry, or external APIs.
 - **Portable**: Runs in `chroot`, VM, or bare-metal on Debian/Fedora.
-- **Recoverable**: Inspired by Minix3, HURD, and HelenOS for resilience.
+- **Recoverable**: Inspired by Minix3, HURD, and [HelenOS][9] for resilience.
 - **Simple Contracts**: Do one thing, very well, with as few reasons to change as possible.
 
 ## Architecture Overview
@@ -83,9 +83,11 @@ large language model experiences in a modular, private, and resilient fashion.
 This document outlines the system architecture and how its components interact
 at both a runtime and systems level.
 
-Name resulted from needing "A runtime" and "Arun" just didn't roll off the
-tongue so well. Runa's [reason for existing][8] is also kind of interesting, if
-you want to check it out. But let's get down to the nitty gritty.
+Name resulted from needing "A runtime" and "_Arun_" just didn't roll off the
+tongue so well, so _Runa_ it became. Runa's [reason for existing][8] is also kind 
+of interesting, if you want to check it out. 
+
+But let's get down to the nitty gritty:
 
 ## Core Components
 
@@ -162,7 +164,7 @@ The idea is to avoid the scenario where running a component as root just to
 bypass configurable limits (because let's face it, they're onerous as hell to
 set up) seems like the best idea.
 
-#### `splinter`
+#### `libsplinter`
 
 - Shared-memory message bus and KV store.
 - Message routing layer with decay, observability, and component-level stats.
@@ -236,7 +238,7 @@ set up) seems like the best idea.
 - Designing toward better safety for neurodivergent users.
 - Currently in design / research ([design doc][6]).
 
-#### `splinfer`
+#### `splinFer`
 
 - Runtime based on `llama.cpp` shared libraries (uses the same functions as
   llama-cli and llama-server)
@@ -246,7 +248,9 @@ set up) seems like the best idea.
 - Runs in foreground or daemon
 - Only talks to the bus (no console I/O), but otherwise carries on simultaneous
   turn-based conversations using different persona settings.
-- Is easy to build, very difficult to design. Current development focus.
+- Is easy to build, very difficult to design. 
+- Current project development focus (what Tim is working on, mostly, right now).
+- Looks like it's coming together in Rust.
 
 #### `alethia`
 
@@ -258,7 +262,7 @@ set up) seems like the best idea.
 - Specifically written for local LLMs to have an eidetic memory of every
   interaction they've had with their user + linked feedback from it that can be
   used to re-train or re-orient context.
-- Is also a very capable document store, with planned addition of:
+- Can also be used as the base for a very capable document store.
 - 100% local, 100% encrypted, as easy to snapshot and rotate as Tieto.
 - Available under dual license on request.
 - Will be ready as soon as Tieto's cluster indexing is done (Late 2025).
@@ -270,7 +274,7 @@ set up) seems like the best idea.
 - gilgul enforces policy, coven decrypts on-the-fly and provides response.
 - Uses separate bus shared only with gilgul.
 - Gilgul monitors coven; multiple options on failure are possible.
-- Lower priority.
+- Lower priority as far as development attention goes.
 
 ## Memory Subsystem
 
@@ -332,4 +336,5 @@ important.
   [6]: https://github.com/timthepost/runa/blob/main/docs/personality_mapping.md
   [7]: https://github.com/timthepost/runa/blob/main/docs/memory_architecture.md
   [8]: https://github.com/timthepost/runa/blob/main/motivation.md
+  [9]: https://helenos.org
 
