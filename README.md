@@ -84,7 +84,8 @@ This document outlines the system architecture and how its components interact
 at both a runtime and systems level.
 
 Name resulted from needing "A runtime" and "Arun" just didn't roll off the
-tongue so well.
+tongue so well. Runa's [reason for existing][8] is also kind of interesting, if
+you want to check it out. But let's get down to the nitty gritty.
 
 ## Core Components
 
@@ -328,4 +329,5 @@ important.
   [5]: https://github.com/timthepost/runa/blob/main/docs/token_whisper.md
   [6]: https://github.com/timthepost/runa/blob/main/docs/personality_mapping.md
   [7]: https://github.com/timthepost/runa/blob/main/docs/memory_architecture.md
+  [8]: https://github.com/timthepost/runa/blob/main/motivation.md
 
