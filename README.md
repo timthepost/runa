@@ -66,8 +66,6 @@ present in the resources that quantized models require during inference. Work
 like this is prioritized over better GPU support (or RAM configurations over 128
 GB). 
 
-![Runa's Current Logo Concept](https://github.com/timthepost/runa/blob/main/assets/runa_logo_concept.png?raw=true)
-
 ## Design Principles
 
 - **Offline-first**: Operates without any internet connection.
@@ -322,6 +320,9 @@ But the biggest one is last: _**Do. No. Harm.**_ We don't present illusions of
 safety we can't back up with data. We have to optimize for the most vulnerable
 of our users with something like Runa as safety and privacy are so very
 important.
+
+![Runa's Current Logo Concept](https://github.com/timthepost/runa/blob/main/assets/runa_logo_concept.png?raw=true)
+
 
   [1]: https://github.com/timthepost/libsplinter
   [2]: https://github.com/timthepost/tieto
