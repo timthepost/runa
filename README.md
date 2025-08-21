@@ -63,13 +63,16 @@ constraint problems in a way that isn't throwing more RAM and GPU at them.
 
 While RWKV's benefits are most apparent during training, they're also exponentially
 present in the resources that quantized models require during inference. Work
-like this is prioritized over better GPU support (or RAM configurations over 128
-GB). 
+like this is prioritized.
+
+It's not that other attention mechanisms won't be important, they will! It's just 
+that our philosophy will usually fall more toward "_do better with the same_" rather
+than "_this solves itself with newer hardware_."
 
 ## Design Principles
 
 - **Offline-first**: Operates without any internet connection.
-- **Componentized**: Isolates responsibilities into swappable units.
+- **Loosely-coupled**: Isolates responsibilities into swappable units.
 - **Privacy-respecting**: No tracking, telemetry, or external APIs.
 - **Portable**: Runs in `chroot`, VM, or bare-metal on Debian/Fedora.
 - **Recoverable**: Inspired by Minix3, HURD, and [HelenOS][9] for resilience.
