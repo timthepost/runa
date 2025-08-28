@@ -216,6 +216,20 @@ set up) seems like the best idea.
   - Oak back-ends
   - Simple turn-based chat plugin
 
+#### `splinfer`
+
+- Runtime based on `llama.cpp` shared libraries (uses the same functions as
+  llama-cli and llama-server)
+- Uses splinter for short-term working memory as well as communication with
+  other components over splinter (hence the name)
+- Uses the same parameter syntax as llama.cpp, for ease of reference
+- Runs in foreground or daemon
+- Only talks to the bus (no console I/O), but otherwise carries on simultaneous
+  turn-based conversations using different persona settings.
+- Is an enormous but amazingly fun undertaking!
+- Current project development focus (what Tim is working on, mostly, right now).
+- [Code now lives here][10] (unstable)
+  
 #### `gilgul`
 
 - Runa's service manager and lifecycle orchestrator.
@@ -248,20 +262,6 @@ set up) seems like the best idea.
 - Learns over time then adapts based on changes.
 - Designing toward better safety for neurodivergent users.
 - Currently in design / research ([design doc][6]).
-
-#### `splinfer`
-
-- Runtime based on `llama.cpp` shared libraries (uses the same functions as
-  llama-cli and llama-server)
-- Uses splinter for short-term working memory as well as communication with
-  other components over splinter (hence the name)
-- Uses the same parameter syntax as llama.cpp, for ease of reference
-- Runs in foreground or daemon
-- Only talks to the bus (no console I/O), but otherwise carries on simultaneous
-  turn-based conversations using different persona settings.
-- Is an enormous but amazingly fun undertaking!
-- Current project development focus (what Tim is working on, mostly, right now).
-- [Code now lives here][10] (unstable)
 
 #### `alethia`
 
