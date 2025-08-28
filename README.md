@@ -202,11 +202,9 @@ set up) seems like the best idea.
 - Shoelace + SortableJS + Deno Universal Kanban Frontend For Runa implemented
   purely in HTML components + JavaScript with Deno for splinter message bus
   integration.
-- Is being designed to handle prompt, personality and other data to use
-  highly-capable 8B quantized models in very versatile ways, from corporate SOP
-  agents to personal assistants to translators to transcribers to researchers:
-  cards provide a great base for many useful things to begin in familiar, easy
-  JS and HTML.
+- Is a great way to present multi-faceted approaches to developing on top of
+  local LLMs. Comes with a chat widget for ongoing conversations, as well as
+  a few examples of assignable "task" objects you could plug a model into.
 - Also provides Oak-based APIs to enable integrations with things like slack,
   discord, notion and other things that can take advantage of an API.
 - Needed something that could "thread well" (as in be a front end for many
