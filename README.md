@@ -226,7 +226,7 @@ set up) seems like the best idea.
   turn-based conversations using different persona settings.
 - Is an enormous but amazingly fun undertaking!
 - Current project development focus (what Tim is working on, mostly, right now).
-- [Code now lives here][10] (unstable)
+- [Code Repo][10] (unstable) Not really for general or curious use until a release is tagged.
   
 #### `gilgul`
 
