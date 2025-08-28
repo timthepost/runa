@@ -172,7 +172,7 @@ set up) seems like the best idea.
 - Shared-memory message bus and KV store.
 - Message routing layer with decay, observability, and component-level stats.
 - Serves as the central coordination plane for all components.
-- Currently in development ([repo][]).
+- Currently in development ([repo][1]).
 - Current focus:
   - Janitorial (automating TS bindings, doc gen)
   - Instrumentation and observability tools (a scope)
