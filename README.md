@@ -228,11 +228,19 @@ set up) seems like the best idea.
 #### `tokenWhisper` / `safeSequence`
 
 - Designed to run fast: inline in any LLM pipeline, or as a sidecar monitor.
-- Token-level policy enforcement and monitoring.
+- Two modes of operation:
+   - With known conversation outcomes and turn-by-turn analysis, extract token 
+   motifs that could have predicted how turns evolved, and assign them weights 
+   based on impact (relative weights (light to heavy, not .1 to .5))
+    - With known motifs, conversation history, and prompt about to be sent, extract
+    likely changes in conversation terms, and how that alters conversation projection.
+    Does it now project toward constitutional violation? Gently nudge the model back
+    into alignment with citations from context.
+- Provides Token-level policy enforcement and monitoring.
 - Uses a Token Impact Matrix to detect violations and guide control flows.
 - Detects pattern-based violations (e.g., jailbreaks, policy circumvention).
 - Can escalate to further checks or redirect response generation.
-- Currently in design / research ([design doc][5]).
+- Currently in prototype, code coming soon. ([design doc][5]).
 
 #### `snarf`
 
@@ -241,7 +249,7 @@ set up) seems like the best idea.
 - Designing toward better safety for neurodivergent users.
 - Currently in design / research ([design doc][6]).
 
-#### `splinFer`
+#### `splinfer`
 
 - Runtime based on `llama.cpp` shared libraries (uses the same functions as
   llama-cli and llama-server)
@@ -251,9 +259,9 @@ set up) seems like the best idea.
 - Runs in foreground or daemon
 - Only talks to the bus (no console I/O), but otherwise carries on simultaneous
   turn-based conversations using different persona settings.
-- Is easy to build, very difficult to design. 
+- Is an enormous but amazingly fun undertaking!
 - Current project development focus (what Tim is working on, mostly, right now).
-- Looks like it's coming together in Rust.
+- [Code now lives here][10] (unstable)
 
 #### `alethia`
 
@@ -340,4 +348,4 @@ important.
   [7]: https://github.com/timthepost/runa/blob/main/docs/memory_architecture.md
   [8]: https://github.com/timthepost/runa/blob/main/motivation.md
   [9]: https://helenos.org
-
+  [10]: https://github.com/timthepost/splinfer
