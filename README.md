@@ -75,7 +75,7 @@ than "_this solves itself with newer hardware_."
 - **Loosely-coupled**: Isolates responsibilities into swappable units.
 - **Privacy-respecting**: No tracking, telemetry, or external APIs.
 - **Portable**: Runs in `chroot`, VM, or bare-metal on Debian/Fedora.
-- **Recoverable**: Inspired by Minix3, HURD, and [HelenOS][9] for resilience.
+- **Recoverable**: Inspired by [HelenOS][9], Minix3 and other microkernel approaches for resilience.
 - **Simple Contracts**: Do one thing, very well, with as few reasons to change as possible.
 
 ## Architecture Overview
