@@ -6,12 +6,13 @@ TokenWhisper is a **token-level, inference-layer safety and monitoring
 framework** for LLMs.\
 It is intended to:
 
-1. **Intercept** model output at the token level during inference.
-2. **Analyze** generated tokens in real time for policy violations, abuse
+1. **Intercept** model output at the token level during inference, as well
+   as user token input during tokenization.
+3. **Analyze** generated tokens in real time for policy violations, abuse
    vectors, or unsafe emerging motifs.
-3. **Respond** by allowing, modifying, blocking, or flagging output before it
+4. **Respond** by allowing, modifying, blocking, or flagging output before it
    reaches the end user.
-4. **Adapt** to different policy contexts dynamically (e.g., per customer, per
+5. **Adapt** to different policy contexts dynamically (e.g., per customer, per
    conversation, per mode).
 
 The idea is to be **low-latency, model-agnostic**, and work in both **local
@@ -40,13 +41,13 @@ inference stacks** (llama.cpp, vLLM, etc.) and API-proxy configurations.
 
 ## Architecture
 
-## TokenWhisper – Architecture Diagram
+## TokenWhisper / SafeSequence – Architecture Diagram
 
 ```mermaid
 flowchart TD
     subgraph Inference Pipeline
         sampler["Sampler<br/>(Top-K / Top-P / Temp)"]
-        interceptor["TokenWhisper<br/>Token Interceptor"]
+        interceptor["TokenWhisper<br/>SafeSequence"]
         outputBuffer["Output Buffer<br/>(to User or Client)"]
     end
 
@@ -75,7 +76,7 @@ flowchart TD
     class policyEngine,tier1,tier2,logger core
 ```
 
-### 1. Token Interceptor
+### 1. Classification / Interception
 
 - Hooks into the inference stream **between the sampler and output buffer**.
 - Receives the **current token**, its **index**, and the **full context** up to
@@ -91,19 +92,23 @@ The core safety checks run here, in two tiers:
 - **Regex / exact phrase matches** for known unsafe patterns.
 - **Token ID sets** for “banned” sequences (e.g., slurs, profanity, sensitive
   PII markers).
-- **Stop-word / kill-switch tokens** that immediately halt generation.
+- **Stop-word / kill-switch tokens** that immediately halt generation, or trigger
+  likely policy warnings.
 - Operates **inline** with negligible delay.
 
 #### Tier 2: Semantic & Contextual Checks
 
 - **Embedding similarity search** against a curated unsafe-content vector
-  database.
+  database (motif corpus, inspired by mRNA).
 - **Lightweight classifier models** (e.g., distilled safety models) for
   higher-level pattern recognition.
 - **Emergent motif detection** – monitors for suspicious build-up (e.g.,
   grooming patterns, disallowed instruction chains).
 - May run asynchronously in a _shadow process_ for speed, signaling “block”
   events if a pattern emerges.
+- May also inject "Hints" to the model regarding matched motifs and their certainty /
+  weights (with the goal of informing the model of alterior context, or to attempt to
+  nudge it back into alignment, depending on context and match). 
 
 ---
 
@@ -131,6 +136,8 @@ When a violation is detected:
   safe text.
 - **Content Reshape:** Adjusts generation path using steering tokens or prompt
   injection _back into_ the model mid-stream.
+- **Whisper:** Injecting trusted context clearly labeled as system-originating in order
+  to ensure the model sees what could happen in the next few turns.
 
 ---
 
@@ -139,7 +146,7 @@ When a violation is detected:
 - Every intercepted token has:
   - **Token index**
   - **Text**
-  - **Matched rule(s)**
+  - **Matched rule(s) and motifs**
   - **Policy decision**
   - **Context snippet**
 - Supports **binary logging** for replay (to retrain safety models or debug).
@@ -147,30 +154,19 @@ When a violation is detected:
 
 ---
 
-## Example Flow
+## Input / Output Problem Domains
 
-1. Model starts generating: "How to make a bomb is..."
-2. **Tier 1** sees `"bomb"` (in banned terms list) → triggers Tier 2.
-3. **Tier 2** checks context embedding → matches with "illegal weapons
-   instructions" vector cluster.
-4. Policy engine says: `"Block"` for this category.
-5. Output to user becomes: "I cannot provide instructions for that."
-6. Event logged for auditing.
+In some operations, we know context and motifs, but need to predict or understand
+probable outcomes of conversations in the next (n) turns, and at what magnitude.
 
----
+In other operations, we know _outcomes and magnitude_ but need to determine what motifs 
+could have predicted them, and predict how many turns sooner we could have known.
 
-## SafeSequence Integration
+**SafeSequence** = Watching model _output_ as generated.
 
-TokenWhisper is designed to integrate with **SafeSequence** (formerly
-TokenFence):
+**TokenWhisper** = Watching prompt _input_ as tokenized.
 
-- **SafeSequence** handles _structured safety checks_ (e.g., grammar/state
-  machine rules for multi-turn exploits).
-- **TokenWhisper** handles _low-level token monitoring and immediate
-  intervention_.
-- Together:
-- TokenWhisper = **real-time guardrail**
-- SafeSequence = **policy-aware pathing & state validation**
+Very similar endeavors, but require different approaches.
 
 ---
 
